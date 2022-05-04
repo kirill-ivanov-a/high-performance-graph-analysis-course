@@ -2,6 +2,8 @@ from typing import List
 
 import pygraphblas as gb
 
+__all__ = ["count_triangles"]
+
 
 def count_triangles(adj_matrix: gb.Matrix) -> List[int]:
     if not adj_matrix.square:
@@ -11,6 +13,8 @@ def count_triangles(adj_matrix: gb.Matrix) -> List[int]:
         raise ValueError(
             f"Unsupported adj_matrix type: {adj_matrix.type}. Expected: BOOL"
         )
+
+    adj_matrix = __to_undirected(adj_matrix)
 
     res = adj_matrix
 
@@ -27,3 +31,8 @@ def count_triangles(adj_matrix: gb.Matrix) -> List[int]:
     res /= 2
 
     return __create_result(adj_matrix.nrows, *res.to_lists())
+
+
+def __to_undirected(adj_matrix: gb.Matrix) -> gb.Matrix:
+    adj_matrix_undirected = adj_matrix.tril() + adj_matrix.triu().transpose()
+    return adj_matrix_undirected + adj_matrix_undirected.transpose()
