@@ -1,6 +1,6 @@
 import pytest
 import pygraphblas as gb
-from project import bfs, multiple_bfs
+from project import bfs, multiple_bfs, MatrixDimensionException, MatrixTypeException
 
 
 @pytest.mark.parametrize(
@@ -96,25 +96,25 @@ def test_multiple_bfs(I, J, V, size, start_vertices, expected_ans):
 
 def test_non_square_bfs():
     adj_matrix = gb.Matrix.dense(gb.BOOL, nrows=1, ncols=2)
-    with pytest.raises(ValueError):
+    with pytest.raises(MatrixDimensionException):
         bfs(adj_matrix, 0)
 
 
 def test_non_square_multiple_bfs():
     adj_matrix = gb.Matrix.dense(gb.BOOL, nrows=1, ncols=2)
-    with pytest.raises(ValueError):
+    with pytest.raises(MatrixDimensionException):
         multiple_bfs(adj_matrix, [0])
 
 
 def test_invalid_matrix_type_bfs():
     adj_matrix = gb.Matrix.dense(gb.INT64, nrows=2, ncols=2)
-    with pytest.raises(ValueError):
+    with pytest.raises(MatrixTypeException):
         bfs(adj_matrix, 0)
 
 
 def test_invalid_matrix_type_multiple_bfs():
     adj_matrix = gb.Matrix.dense(gb.INT64, nrows=2, ncols=2)
-    with pytest.raises(ValueError):
+    with pytest.raises(MatrixTypeException):
         multiple_bfs(adj_matrix, [0])
 
 
