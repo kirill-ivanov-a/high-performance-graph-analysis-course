@@ -1,4 +1,4 @@
-__all__ = ["MatrixTypeException", "MatrixDimensionException"]
+__all__ = ["MatrixTypeException", "MatrixDimensionException", "NegativeCycleException"]
 
 
 class MatrixDimensionException(Exception):
@@ -6,4 +6,8 @@ class MatrixDimensionException(Exception):
 
 
 class MatrixTypeException(Exception):
+    pass
+
+
+class NegativeCycleException(Exception):
     pass
